@@ -436,6 +436,17 @@ wheels = [
 ]
 
 [[package]]
+name = "eventregistry"
+version = "9.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytz" },
+    { name = "requests" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d5/71/8e2e8229d4b4ac37a8d64fa219ed9826b2ab05404f00f1a484966d4fd932/eventregistry-9.1.tar.gz", hash = "sha256:6c9e37852e5e16a02f0ba4321ef36ea7c3fd2a7dbcad35d1e9a520915b3e63d5", size = 59066, upload-time = "2023-06-23T08:39:11.206Z" }
+
+[[package]]
 name = "faiss-cpu"
 version = "1.13.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2343,6 +2354,7 @@ dependencies = [
     { name = "beautifulsoup4" },
     { name = "edgar" },
     { name = "edgartools" },
+    { name = "eventregistry" },
     { name = "faiss-cpu" },
     { name = "langchain" },
     { name = "langchain-community" },
@@ -2364,6 +2376,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.14.3" },
     { name = "edgar", specifier = ">=5.6.3" },
     { name = "edgartools", specifier = ">=5.30.0" },
+    { name = "eventregistry", specifier = ">=9.1" },
     { name = "faiss-cpu", specifier = ">=1.13.2" },
     { name = "langchain", specifier = ">=1.2.15" },
     { name = "langchain-community", specifier = ">=0.4.1" },

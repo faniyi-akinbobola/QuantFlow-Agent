@@ -6,7 +6,9 @@ REQUIRED_ENV_VARS = [
     "PINECONE_API_KEY",
     "PINECONE_INDEX_NAME",
     "NAME",
-    "EMAIL"
+    "EMAIL",
+    "NEWSAPI_KEY",
+    "ALPHAVANTAGE_KEY",
 ]
 
 def main():
