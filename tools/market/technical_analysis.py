@@ -1,17 +1,17 @@
 from langchain.tools import tool
 import requests
-
 from utils.loader import load_env_var
 
 @tool
-def technical_analysis(ticker: str) -> dict:
+def technical_analysis(ticker: str) -> str:
     """
-    Docstring for technical_analysis
+    Get RSI technical analysis with buy/sell signals.
     
-    :param ticker: Stock ticker symbol (e.g., AAPL, TSLA)
-    :type ticker: str
-    :return: A dictionary containing technical analysis results (e.g., RSI, signal, date)
-    :rtype: dict
+    Args:
+        ticker: Stock ticker symbol (e.g., AAPL, TSLA)
+        
+    Returns:
+        RSI value with overbought/oversold interpretation
     """
 
     try:
@@ -27,6 +27,7 @@ def technical_analysis(ticker: str) -> dict:
         )
 
         response = requests.get(url)
+        response.raise_for_status()
         data = response.json()
 
         rsi_data = data.get("Technical Analysis: RSI", {})
@@ -40,17 +41,18 @@ def technical_analysis(ticker: str) -> dict:
 
         # interpret signal
         if latest_rsi > 70:
-            signal = "overbought"
+            signal = "overbought (>70 is strong sell, 50-70 is mild sell)"
         elif latest_rsi < 30:
-            signal = "oversold"
+            signal = "oversold (>30 is mild buy, <30 is strong buy)"
         else:
-            signal = "neutral"
+            signal = "neutral (50-70 is mild buy, 30-50 is mild sell)"
 
-        return {
-            "ticker": ticker,
-            "rsi": latest_rsi,
-            "signal": signal,
-            "date": latest_date
-        }
+        # Format as readable string
+        output = f"Technical Analysis for {ticker}:\n\n"
+        output += f"RSI (14-day): {latest_rsi:.2f}\n"
+        output += f"Signal: {signal}\n"
+        output += f"Date: {latest_date}"
+
+        return output
     except Exception as e:
-        return {"error": f"Error performing technical analysis for {ticker}: {e}"}
+        return f"Error performing technical analysis for {ticker}: {e}"

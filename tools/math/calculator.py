@@ -3,20 +3,21 @@ import numexpr
 
 
 @tool
-def calculator(query: str) -> dict:
+def calculator(query: str) -> str:
     """
-    Docstring for calculator
+    Evaluate mathematical expressions safely.
     
-    :param query: 
-    :type query: str
-    :return: Description
-    :rtype: dict
+    Supports basic arithmetic: +, -, *, /, **, (), etc.
+    
+    Args:
+        expression: Mathematical expression to evaluate (e.g., "2 + 2", "10 * 5")
+        
+    Returns:
+        The result as a string
     """
+
     try:
         result = numexpr.evaluate(query).item()
-        return {
-            "expression": query,
-            "result": result
-        }
+        return f"The result of '{query}' is: {result}"
     except Exception as e:
-        return {f"Error evaluating expression: {e}"}
+        return f"Error evaluating expression: {e}"

@@ -53,6 +53,7 @@ def load_vectorstore(embeddings):
     :return: The loaded vector store
     :rtype: PineconeVectorStore
     """
+    
     index = pc.Index(INDEX_NAME)
 
     vectorstore = PineconeVectorStore(

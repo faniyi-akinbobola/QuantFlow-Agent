@@ -4,7 +4,7 @@ from utils.loader import load_env_var
 
 
 @tool
-def fetch_latest_news(ticker: str, max_items: int = 5) -> dict:
+def fetch_latest_news(ticker: str, max_items: int = 5) -> str:
     """
     Fetch the latest news for a given stock ticker.
     
@@ -37,10 +37,15 @@ def fetch_latest_news(ticker: str, max_items: int = 5) -> dict:
         if not news_items:
             return f"message: No recent news found for {ticker}."
         
-        return {
-            "ticker": ticker,
-            "articles": news_items
-        }
+        # Format as string for LLM
+        output = f"Latest News for {ticker}:\n\n"
+        for i, item in enumerate(news_items, 1):
+            output += f"{i}. {item['title']}\n"
+            output += f"   Source: {item['source']} | Date: {item['date']}\n"
+            output += f"   {item['summary']}\n"
+            output += f"   URL: {item['url']}\n\n"
+        
+        return output
 
     except Exception as e:
-        return {f"Error fetching news for {ticker}: {e}"}
+        return f"Error fetching news for {ticker}: {e}"
