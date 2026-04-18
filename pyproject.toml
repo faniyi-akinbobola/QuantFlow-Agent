@@ -15,6 +15,7 @@ dependencies = [
     "langchain-openai>=1.1.13",
     "langchain-pinecone>=0.2.13",
     "langgraph>=1.1.6",
+    "langgraph-checkpoint-sqlite>=3.0.3",
     "lxml>=6.0.4",
     "numexpr>=2.14.1",
     "pinecone-client>=6.0.0",
