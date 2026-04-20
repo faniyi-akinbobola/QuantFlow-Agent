@@ -77,8 +77,10 @@
 #         return f"Error searching SEC filings: {e}"
 
 from langchain.tools import tool
-from rag.vectorstore import load_vectorstore
+# from rag.vectorstore import load_vectorstore
 from rag.embeddings import get_embeddings
+from rag.chroma_vector_store import load_vectorstore  # ✅ Use ChromaDB!
+
 import re
 
 

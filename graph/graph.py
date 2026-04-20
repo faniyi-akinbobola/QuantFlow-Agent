@@ -48,3 +48,6 @@ workflow.add_edge("tools", "agent")
 
 # Compile the graph
 app = workflow.compile(checkpointer=checkpointer)
+
+# Alias for convenience
+graph = app

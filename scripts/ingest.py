@@ -8,7 +8,8 @@ sys.path.insert(0, str(project_root))
 from time import time
 from rag.ingest_sec import fetch_filings
 from rag.chunking import split_documents
-from rag.vectorstore import create_vectorstore
+# from rag.vectorstore import create_vectorstore
+from rag.chroma_vector_store import create_vectorstore
 from langchain_core.documents import Document
 from rag.embeddings import get_embeddings
 from pinecone import Pinecone, ServerlessSpec
@@ -56,7 +57,7 @@ def run(tickers: list[str] = TICKERS):
     Returns:
         PineconeVectorStore instance
     """
-    ensure_index_exists()
+    # ensure_index_exists()
     all_docs = []
     failed_tickers = []
 

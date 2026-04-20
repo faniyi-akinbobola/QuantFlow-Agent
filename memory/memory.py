@@ -22,8 +22,11 @@ Usage:
 # Database file location
 DB_PATH = os.path.join(os.path.dirname(__file__), "checkpoints.db")
 
-# Create checkpointer
-checkpointer = SqliteSaver.from_conn_string(DB_PATH)
+# Create checkpointer using context manager
+# SqliteSaver.from_conn_string returns a context manager, 
+# so we need to enter it to get the actual checkpointer
+_checkpointer_context = SqliteSaver.from_conn_string(DB_PATH)
+checkpointer = _checkpointer_context.__enter__()
 
 # Initialize database tables
 checkpointer.setup()
