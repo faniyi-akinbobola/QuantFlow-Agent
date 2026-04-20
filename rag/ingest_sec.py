@@ -34,7 +34,17 @@ def fetch_filings(ticker: str, num_10k: int = 3, num_10q: int = 2) -> List[Dict]
             try:
                 print(f" {ticker} | {filing.form} | {filing.filing_date}")
                 
-                text = filing.obj().text()
+                # Get the filing text using the correct API
+                filing_obj = filing.obj()
+                
+                # Try different methods to extract text
+                if hasattr(filing_obj, 'text'):
+                    text = filing_obj.text
+                elif hasattr(filing_obj, 'get_text'):
+                    text = filing_obj.get_text()
+                else:
+                    # Fallback: get the raw HTML and extract text
+                    text = filing.html()
                 
                 if not text or len(text.strip()) < 100:
                     print(f"  ⚠️  Skipping empty/invalid filing")

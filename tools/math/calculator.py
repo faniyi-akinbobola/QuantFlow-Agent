@@ -10,7 +10,7 @@ def calculator(query: str) -> str:
     Supports basic arithmetic: +, -, *, /, **, (), etc.
     
     Args:
-        expression: Mathematical expression to evaluate (e.g., "2 + 2", "10 * 5")
+        query: Mathematical expression to evaluate (e.g., "2 + 2", "10 * 5")
         
     Returns:
         The result as a string

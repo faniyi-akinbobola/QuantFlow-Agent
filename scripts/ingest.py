@@ -1,10 +1,50 @@
+import sys
+from pathlib import Path
+
+# Add project root to Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+from time import time
 from rag.ingest_sec import fetch_filings
 from rag.chunking import split_documents
 from rag.vectorstore import create_vectorstore
 from langchain_core.documents import Document
 from rag.embeddings import get_embeddings
+from pinecone import Pinecone, ServerlessSpec
+from utils.loader import load_env_var
 
 TICKERS = ["AAPL", "TSLA", "MSFT", "AMZN"]
+
+def ensure_index_exists():
+    """Create Pinecone index if it doesn't exist."""
+    api_key = load_env_var("PINECONE_API_KEY")
+    index_name = load_env_var("PINECONE_INDEX_NAME")
+    
+    pc = Pinecone(api_key=api_key)
+    
+    existing_indexes = [idx.name for idx in pc.list_indexes()]
+    
+    if index_name in existing_indexes:
+        print(f"✅ Index '{index_name}' already exists")
+        return
+    
+    print(f"Creating index '{index_name}'...")
+    pc.create_index(
+        name=index_name,
+        dimension=3072,
+        metric="cosine",
+        spec=ServerlessSpec(cloud="aws", region="us-east-1")
+    )
+    
+    print("⏳ Waiting for index to be ready...")
+    while True:
+        status = pc.describe_index(index_name)
+        if status.status['ready']:
+            break
+        time.sleep(1)
+    
+    print("✅ Index created and ready!")
 
 def run(tickers: list[str] = TICKERS):
     """
@@ -16,6 +56,7 @@ def run(tickers: list[str] = TICKERS):
     Returns:
         PineconeVectorStore instance
     """
+    ensure_index_exists()
     all_docs = []
     failed_tickers = []
 
