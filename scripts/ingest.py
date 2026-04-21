@@ -17,6 +17,20 @@ from utils.loader import load_env_var
 
 TICKERS = ["AAPL", "TSLA", "MSFT", "AMZN"]
 
+# TICKERS = [
+#     # Tech Giants
+#     "AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "TSLA", "NFLX",
+#     
+#     # Finance
+#     "JPM", "V", "MA", "BAC",
+#     
+#     # Healthcare
+#     "JNJ", "UNH", "LLY",
+#     
+#     # Consumer
+#     "WMT", "PG", "KO", "PEP",
+# ]
+
 def ensure_index_exists():
     """Create Pinecone index if it doesn't exist."""
     api_key = load_env_var("PINECONE_API_KEY")
