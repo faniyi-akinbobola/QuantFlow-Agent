@@ -18,16 +18,21 @@ from memory.memory import make_checkpointer
 
 
 WELCOME_MESSAGE = """
-👋 Hi! I'm your AI financial analyst.
+👋 Welcome to QuantFlow AI — your financial analysis assistant.
 
 I can help you with:
-- Stock analysis & comparisons
-- Company financials & earnings
-- Technical indicators & key metrics
-- SEC filings research (AAPL, TSLA, MSFT, AMZN)
-- Market news & analyst recommendations
+- 📊 Stock analysis and company comparisons
+- 💼 Financials, earnings, and key metrics
+- 📈 Technical indicators and market trends
+- 📄 SEC filings research (multiple companies supported)
+- 📰 Latest market news and analyst insights
 
-Ask me anything about stocks!
+💡 Try asking:
+- "Compare AAPL and MSFT fundamentals"
+- "What are Tesla’s biggest risks from its latest 10-K?"
+- "What’s the latest news on NVDA?"
+
+Ask me anything about stocks, companies, or market trends to get started. 
 """
 
 # Graph compiled with async checkpointer (set on first use)

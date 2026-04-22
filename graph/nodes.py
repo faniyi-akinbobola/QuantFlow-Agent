@@ -69,7 +69,7 @@ def agent_node(state: AgentState) -> dict:
             
             # Check if it's a quota exceeded error (don't retry these)
             if "insufficient_quota" in error_msg or "exceeded your current quota" in error_msg:
-                print(f"\n❌ OpenAI quota exceeded. Please check your billing at https://platform.openai.com/account/billing")
+                print(f"\n OpenAI quota exceeded. Please check your billing at https://platform.openai.com/account/billing")
                 raise
             
             # It's a temporary rate limit - retry with backoff
@@ -90,7 +90,7 @@ def agent_node(state: AgentState) -> dict:
                 except:
                     pass
             
-            print(f"⏳ Rate limit hit. Waiting {wait_time:.1f}s before retry {attempt + 1}/{max_retries}...")
+            print(f" Rate limit hit. Waiting {wait_time:.1f}s before retry {attempt + 1}/{max_retries}...")
             time.sleep(wait_time)
     
     # This should never be reached due to the raise in the loop
