@@ -1,7 +1,6 @@
 import re
 from openai import OpenAI
 
-client = OpenAI()
 
 def grounding_evaluator_llm(examples):
     """
@@ -16,7 +15,8 @@ def grounding_evaluator_llm(examples):
     Returns:
         float: Grounding score (0–100)
     """
-
+    
+    client = OpenAI()
     scores = []
 
     for example in examples:

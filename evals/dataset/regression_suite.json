@@ -1,0 +1,128 @@
+[
+  {
+    "id": "reg_001",
+    "question": "What's AAPL's current stock price?",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["get_current_price_yahoo"],
+    "expected_answer_contains": ["$", "AAPL", "Apple"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_002",
+    "question": "Get me the latest news about Tesla",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["fetch_latest_news"],
+    "expected_answer_contains": ["Tesla", "TSLA"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_003",
+    "question": "What are the key financial metrics for Microsoft?",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["get_key_metrics"],
+    "expected_answer_contains": ["Microsoft", "MSFT", "P/E", "market cap"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_004",
+    "question": "Compare AAPL and MSFT",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["compare_stocks"],
+    "mode": "contains",
+    "expected_answer_contains": ["Apple", "Microsoft", "comparison"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "reg_005",
+    "question": "What do analysts say about NVDA?",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["get_analyst_recommendations"],
+    "expected_answer_contains": ["NVDA", "NVIDIA", "analyst", "rating"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_006",
+    "question": "Show me GOOGL's recent earnings history",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["get_earnings_history"],
+    "expected_answer_contains": ["Google", "GOOGL", "earnings", "EPS"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_007",
+    "question": "What's 25% of 1500?",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["calculator"],
+    "expected_answer_contains": ["375"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_008",
+    "question": "Analyze AMZN's technical indicators",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["technical_analysis"],
+    "expected_answer_contains": ["Amazon", "AMZN", "technical"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "reg_009",
+    "question": "Get META's complete financial statements",
+    "expected_behavior": "single_tool_call",
+    "expected_tools": ["get_financials"],
+    "expected_answer_contains": ["Meta", "META", "revenue", "income"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "reg_010",
+    "question": "What does Apple's 10-K say about iPhone sales?",
+    "expected_behavior": "rag_retrieval",
+    "expected_tools": ["search_sec_filings"],
+    "expected_answer_contains": ["Apple", "iPhone", "10-K"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "reg_011",
+    "question": "I want to invest $50,000. If TSLA is $200 per share, how many shares can I buy?",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["calculator"],
+    "mode": "contains",
+    "expected_answer_contains": ["250", "shares"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "reg_012",
+    "question": "Is NFLX a good buy based on fundamentals and technicals?",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["get_key_metrics", "technical_analysis", "get_analyst_recommendations"],
+    "mode": "contains",
+    "expected_answer_contains": ["Netflix", "NFLX", "fundamental", "technical"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "reg_013",
+    "question": "Compare the P/E ratios of tech giants AAPL, MSFT, GOOGL, and META",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["get_key_metrics", "compare_stocks"],
+    "mode": "contains",
+    "expected_answer_contains": ["P/E", "ratio", "Apple", "Microsoft"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "reg_014",
+    "question": "What's the latest sentiment on AMD from both news and analysts?",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains",
+    "expected_answer_contains": ["AMD", "sentiment", "news", "analyst"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "reg_015",
+    "question": "Calculate my potential profit: bought 100 AAPL shares at $150, current price $180",
+    "expected_behavior": "multi_tool_call",
+    "expected_tools": ["calculator"],
+    "mode": "contains",
+    "expected_answer_contains": ["3000", "profit", "$30"],
+    "difficulty": "medium"
+  }
+]

@@ -1,7 +1,6 @@
 import re 
 from openai import OpenAI
 
-client = OpenAI()
 
 def faithfulness_evaluator_llm(examples):
     """
@@ -16,7 +15,8 @@ def faithfulness_evaluator_llm(examples):
     Returns:
         float: Faithfulness score (0–100)
     """
-
+    
+    client = OpenAI()
     scores = []
 
     for example in examples:

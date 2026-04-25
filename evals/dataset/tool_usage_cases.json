@@ -1,0 +1,152 @@
+[
+  {
+    "id": "tool_001",
+    "question": "What's the latest news on Apple?",
+    "expected_tools": ["fetch_latest_news"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_002",
+    "question": "Compare AAPL and MSFT financials",
+    "expected_tools": ["compare_stocks"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_003",
+    "question": "Get me TSLA's current price",
+    "expected_tools": ["get_current_price_yahoo"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_004",
+    "question": "What are NVDA's key metrics?",
+    "expected_tools": ["get_key_metrics"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_005",
+    "question": "Tell me about Amazon's business",
+    "expected_tools": ["get_company_info"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_006",
+    "question": "What do analysts recommend for GOOGL?",
+    "expected_tools": ["get_analyst_recommendations"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_007",
+    "question": "Show me META's earnings over time",
+    "expected_tools": ["get_earnings_history"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_008",
+    "question": "What's 15% of 2000?",
+    "expected_tools": ["calculator"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_009",
+    "question": "Analyze NFLX's technical chart patterns",
+    "expected_tools": ["technical_analysis"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_010",
+    "question": "Get AMD's complete income statement",
+    "expected_tools": ["get_financials"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_011",
+    "question": "What does Intel's 10-K say about manufacturing?",
+    "expected_tools": ["search_sec_filings"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_012",
+    "question": "Should I buy AAPL? Give me a full analysis with price, metrics, news, and analyst views",
+    "expected_tools": ["get_current_price_yahoo", "get_key_metrics", "fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_013",
+    "question": "Compare the valuation and growth of TSLA vs F",
+    "expected_tools": ["compare_stocks", "get_key_metrics"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_014",
+    "question": "How has MSFT performed in earnings and what's the trend?",
+    "expected_tools": ["get_earnings_history", "get_key_metrics"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_015",
+    "question": "Is NVDA technically strong? Check the charts and current price",
+    "expected_tools": ["technical_analysis", "get_current_price_yahoo"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_016",
+    "question": "What's the latest on AMZN from news and what do their financials show?",
+    "expected_tools": ["fetch_latest_news", "get_financials"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_017",
+    "question": "Calculate ROI: invested $10,000 at $50/share, now trading at $75",
+    "expected_tools": ["calculator"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_018",
+    "question": "Deep dive on GOOGL: company info, financials, news, and recommendations",
+    "expected_tools": ["get_company_info", "get_financials", "fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_019",
+    "question": "Compare META and SNAP across all dimensions",
+    "expected_tools": ["compare_stocks", "get_key_metrics", "get_financials"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_020",
+    "question": "What's in Apple's SEC filings about services revenue?",
+    "expected_tools": ["search_sec_filings"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_021",
+    "question": "Technical and fundamental analysis for NFLX",
+    "expected_tools": ["technical_analysis", "get_key_metrics", "get_financials"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_022",
+    "question": "How much profit did I make: 50 shares bought at $100, sold at $150?",
+    "expected_tools": ["calculator"],
+    "mode": "exact"
+  },
+  {
+    "id": "tool_023",
+    "question": "Get AMD's price, news, and what analysts think",
+    "expected_tools": ["get_current_price_yahoo", "fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_024",
+    "question": "Complete investment thesis for TSLA using all available data",
+    "expected_tools": ["get_current_price_yahoo", "get_company_info", "get_key_metrics", "get_financials", "fetch_latest_news", "get_analyst_recommendations", "technical_analysis"],
+    "mode": "contains"
+  },
+  {
+    "id": "tool_025",
+    "question": "What's the weighted average: 40% of 150 plus 60% of 200?",
+    "expected_tools": ["calculator"],
+    "mode": "exact"
+  }
+]

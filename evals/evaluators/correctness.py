@@ -36,7 +36,7 @@ def correctness_evaluator_llm(examples):
         """
 
         response = OpenAI().chat.completions.create(
-            model="gpt-4.1-mini",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "user", "content": PROMPT.format(question=question, answer=output, reference=reference)}
             ],

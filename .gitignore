@@ -54,10 +54,14 @@ data/chroma_db/
 **/checkpoints.db
 memory/*.db
 
-# Eval reports (regenerated)
+# Eval reports (regenerated - keep only README)
 evals/reports/*.json
 evals/reports/*.html
-!evals/reports/.gitkeep
+evals/reports/*.md
+!evals/reports/README.md
+
+# Eval cache
+.eval_cache/
 
 # Python
 .venv/

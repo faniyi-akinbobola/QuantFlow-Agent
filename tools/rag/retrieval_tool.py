@@ -99,7 +99,7 @@ def clean_html(text: str) -> str:
 
 
 @tool
-def search_sec_filings(query: str, ticker: str, top_k: int = 5) -> str:
+def search_sec_filings(query: str, ticker: str, top_k: int = 8) -> str:
     """
     Search SEC filings (10-K and 10-Q) for a given stock ticker.
     

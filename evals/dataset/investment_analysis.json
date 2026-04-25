@@ -1,0 +1,133 @@
+[
+  {
+    "id": "invest_001",
+    "question": "Should I invest in AAPL right now? Provide a comprehensive analysis.",
+    "expected_behavior": "comprehensive_analysis",
+    "required_components": [
+      "current_price",
+      "financial_metrics",
+      "news_sentiment",
+      "analyst_recommendations",
+      "risk_assessment"
+    ],
+    "expected_tools": ["get_current_price_yahoo", "get_key_metrics", "fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_002",
+    "question": "Compare MSFT and GOOGL as investment opportunities",
+    "expected_behavior": "comparative_analysis",
+    "required_components": [
+      "price_comparison",
+      "valuation_metrics",
+      "growth_comparison",
+      "recommendation"
+    ],
+    "expected_tools": ["compare_stocks", "get_financials", "get_key_metrics"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_003",
+    "question": "What's the value proposition for investing in TSLA long-term?",
+    "expected_behavior": "long_term_analysis",
+    "required_components": [
+      "business_model",
+      "growth_potential",
+      "competitive_advantages",
+      "risks"
+    ],
+    "expected_tools": ["get_company_info", "get_key_metrics", "fetch_latest_news", "search_sec_filings"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_004",
+    "question": "Is NVDA overvalued based on its current metrics?",
+    "expected_behavior": "valuation_analysis",
+    "required_components": [
+      "valuation_ratios",
+      "peer_comparison",
+      "growth_justification",
+      "conclusion"
+    ],
+    "expected_tools": ["get_key_metrics", "get_financials", "compare_stocks"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_005",
+    "question": "Analyze META's earnings trend over the past year",
+    "expected_behavior": "trend_analysis",
+    "required_components": [
+      "earnings_history",
+      "growth_rate",
+      "beat_miss_pattern",
+      "outlook"
+    ],
+    "expected_tools": ["get_earnings_history", "get_financials", "get_key_metrics"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_006",
+    "question": "What are the technical indicators saying about AMZN stock?",
+    "expected_behavior": "technical_analysis",
+    "required_components": [
+      "trend_analysis",
+      "support_resistance",
+      "momentum_indicators",
+      "trading_recommendation"
+    ],
+    "expected_tools": ["technical_analysis", "get_current_price_yahoo"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_007",
+    "question": "Should I buy the dip on NFLX? Analyze the situation.",
+    "expected_behavior": "dip_buying_analysis",
+    "required_components": [
+      "recent_performance",
+      "reason_for_decline",
+      "fundamentals_check",
+      "recommendation"
+    ],
+    "expected_tools": ["get_current_price_yahoo", "fetch_latest_news", "get_key_metrics", "technical_analysis"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_008",
+    "question": "What's the risk/reward ratio for investing in AMD right now?",
+    "expected_behavior": "risk_reward_analysis",
+    "required_components": [
+      "upside_potential",
+      "downside_risks",
+      "probability_assessment",
+      "position_sizing_advice"
+    ],
+    "expected_tools": ["get_key_metrics", "technical_analysis", "fetch_latest_news", "get_analyst_recommendations"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_009",
+    "question": "Calculate the potential return if I invest $10,000 in AAPL and it reaches analyst price targets",
+    "expected_behavior": "calculation_based_analysis",
+    "required_components": [
+      "current_price",
+      "analyst_targets",
+      "return_calculation",
+      "risk_disclaimer"
+    ],
+    "expected_tools": ["get_current_price_yahoo", "get_analyst_recommendations", "calculator"],
+    "mode": "contains"
+  },
+  {
+    "id": "invest_010",
+    "question": "Which has better growth prospects: SHOP or SQ?",
+    "expected_behavior": "growth_comparison",
+    "required_components": [
+      "revenue_growth",
+      "market_opportunity",
+      "competitive_position",
+      "recommendation"
+    ],
+    "expected_tools": ["compare_stocks", "get_financials", "get_key_metrics", "fetch_latest_news"],
+    "mode": "contains"
+  }
+]
