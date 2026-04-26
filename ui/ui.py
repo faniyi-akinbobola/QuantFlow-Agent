@@ -87,12 +87,6 @@ async def main(message: cl.Message):
                 if content:
                     await msg.stream_token(content)
 
-            elif kind == "on_tool_start":
-                await cl.Message(
-                    content=f"🔧 Using tool: **{event['name']}**",
-                    author="System"
-                ).send()
-
         await msg.update()
 
     except Exception as e:
