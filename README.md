@@ -10,6 +10,8 @@ pinned: false
 
 # QuantFlow Agent 🚀
 
+**🌐 Live Demo: [huggingface.co/spaces/Faniyi/quantflow-agent](https://huggingface.co/spaces/Faniyi/quantflow-agent)**
+
 AI-powered stock market analysis agent with real-time data, SEC filings analysis, and comprehensive financial tools.
 
 ## 📋 Table of Contents
@@ -120,39 +122,39 @@ QuantFlow Agent provides **11 specialized tools** across 5 categories:
 
 ### Market Data (4)
 
-| Tool | Purpose | Source |
-|------|---------|--------|
-| `get_current_price_yahoo` | Real-time stock prices | Yahoo Finance |
-| `get_key_metrics` | P/E, dividend, beta, 52-week range | Yahoo Finance |
-| `technical_analysis` | RSI with buy/sell signals | Alpha Vantage |
-| `compare_stocks` | Side-by-side comparison (up to 5) | Yahoo Finance |
+| Tool                      | Purpose                            | Source        |
+| ------------------------- | ---------------------------------- | ------------- |
+| `get_current_price_yahoo` | Real-time stock prices             | Yahoo Finance |
+| `get_key_metrics`         | P/E, dividend, beta, 52-week range | Yahoo Finance |
+| `technical_analysis`      | RSI with buy/sell signals          | Alpha Vantage |
+| `compare_stocks`          | Side-by-side comparison (up to 5)  | Yahoo Finance |
 
 ### Company Analysis (4)
 
-| Tool | Purpose | Source |
-|------|---------|--------|
-| `get_company_info` | Sector, industry, description | Yahoo Finance |
-| `get_financials` | Income, Balance Sheet, Cash Flow | Yahoo Finance |
-| `get_earnings_history` | EPS beats/misses, next date | Yahoo Finance |
-| `get_analyst_recommendations` | Price targets, ratings | Yahoo Finance |
+| Tool                          | Purpose                          | Source        |
+| ----------------------------- | -------------------------------- | ------------- |
+| `get_company_info`            | Sector, industry, description    | Yahoo Finance |
+| `get_financials`              | Income, Balance Sheet, Cash Flow | Yahoo Finance |
+| `get_earnings_history`        | EPS beats/misses, next date      | Yahoo Finance |
+| `get_analyst_recommendations` | Price targets, ratings           | Yahoo Finance |
 
 ### News (1)
 
-| Tool | Purpose | Source |
-|------|---------|--------|
+| Tool                | Purpose                | Source        |
+| ------------------- | ---------------------- | ------------- |
 | `fetch_latest_news` | Breaking news articles | EventRegistry |
 
 ### RAG (1)
 
-| Tool | Purpose | Source |
-|------|---------|--------|
+| Tool                 | Purpose                      | Source            |
+| -------------------- | ---------------------------- | ----------------- |
 | `search_sec_filings` | AI-powered SEC filing search | ChromaDB + OpenAI |
 
 ### Utilities (1)
 
-| Tool | Purpose | Technology |
-|------|---------|------------|
-| `calculator` | Safe math evaluation | NumExpr |
+| Tool         | Purpose              | Technology |
+| ------------ | -------------------- | ---------- |
+| `calculator` | Safe math evaluation | NumExpr    |
 
 **📖 See [TOOLS.md](TOOLS.md) for full documentation.**
 
@@ -218,11 +220,11 @@ uv run python main.py
 
 ## 🔑 API Keys Required
 
-| Service | Purpose | Cost |
-|---------|---------|------|
-| **OpenAI** | LLM (GPT-4o-mini) + embeddings | Pay-per-use |
-| **Alpha Vantage** | RSI / technical analysis | Free (5 req/min) |
-| **EventRegistry** | News articles | Free tier (1000/day) |
+| Service           | Purpose                        | Cost                 |
+| ----------------- | ------------------------------ | -------------------- |
+| **OpenAI**        | LLM (GPT-4o-mini) + embeddings | Pay-per-use          |
+| **Alpha Vantage** | RSI / technical analysis       | Free (5 req/min)     |
+| **EventRegistry** | News articles                  | Free tier (1000/day) |
 
 **No key needed:** Yahoo Finance (`yfinance`) · ChromaDB (runs fully local)
 
@@ -244,12 +246,12 @@ uv run python evals/runners/run_local.py
 
 **Latest results:**
 
-| Metric | Score |
-|--------|-------|
-| Tool Usage | 93.33% |
-| Correctness | 93.33% |
+| Metric            | Score  |
+| ----------------- | ------ |
+| Tool Usage        | 93.33% |
+| Correctness       | 93.33% |
 | Reasoning Quality | 86.67% |
-| Overall Pass Rate | ~99% |
+| Overall Pass Rate | ~99%   |
 
 See [`evals/README.md`](evals/README.md) for details.
 
