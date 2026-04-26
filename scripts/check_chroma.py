@@ -17,13 +17,14 @@ vs = load_vectorstore(get_embeddings())
 total_count = vs._collection.count()
 print(f'Total documents: {total_count}')
 
-# Sample metadata to check tickers
-sample = vs._collection.get(limit=1000, include=['metadatas'])
+# Sample more metadata to check tickers (increase sample size)
+sample_size = min(50000, total_count)
+sample = vs._collection.get(limit=sample_size, include=['metadatas'])
 
 tickers = {m.get('ticker') for m in sample['metadatas'] if m.get('ticker')}
-print(f'Tickers found in sample: {sorted(tickers)}')
+print(f'\nUnique tickers found (sample of {sample_size} docs): {sorted(tickers)}')
 
 ticker_counts = Counter(m.get('ticker') for m in sample['metadatas'] if m.get('ticker'))
-print('\nSample documents per ticker (first 1000 docs):')
+print(f'\nDocuments per ticker in sample:')
 for ticker, count in sorted(ticker_counts.items()):
     print(f'  {ticker}: {count}')

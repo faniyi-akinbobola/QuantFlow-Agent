@@ -93,7 +93,7 @@
   },
   {
     "id": "invest_008",
-    "question": "What's the risk/reward ratio for investing in AMD right now?",
+    "question": "What's the risk/reward ratio for investing in BAC right now?",
     "expected_behavior": "risk_reward_analysis",
     "required_components": [
       "upside_potential",
@@ -119,7 +119,7 @@
   },
   {
     "id": "invest_010",
-    "question": "Which has better growth prospects: SHOP or SQ?",
+    "question": "Which has better growth prospects: JPM or MA?",
     "expected_behavior": "growth_comparison",
     "required_components": [
       "revenue_growth",

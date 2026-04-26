@@ -20,5 +20,6 @@ workflow.add_conditional_edges("agent", should_continue, {"tools": "tools", END:
 workflow.add_edge("tools", "agent")
 
 # Compiled without checkpointer - injected at runtime via config in ui.py
+# Note: recursion_limit is set in config during invoke, not compile
 app = workflow.compile()
 graph = app

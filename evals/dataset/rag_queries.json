@@ -57,16 +57,16 @@
   },
   {
     "id": "rag_009",
-    "question": "Explain Intel's capital expenditure plans based on their 10-K filing",
+    "question": "What did JPMorgan report about credit losses in their latest 10-K?",
     "expected_behavior": "retrieve_and_answer",
-    "relevant_doc_ids": ["INTC_10K_2024"],
-    "category": "capex_analysis"
+    "relevant_doc_ids": ["JPM_10K_2024"],
+    "category": "risk_metrics"
   },
   {
     "id": "rag_010",
-    "question": "What does AMD's filing reveal about their competitive positioning?",
+    "question": "According to Visa's SEC filings, what are their main growth drivers?",
     "expected_behavior": "retrieve_and_answer",
-    "relevant_doc_ids": ["AMD_10K_2024"],
-    "category": "competitive_analysis"
+    "relevant_doc_ids": ["V_10K_2024"],
+    "category": "business_strategy"
   }
 ]

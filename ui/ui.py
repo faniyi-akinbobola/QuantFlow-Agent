@@ -63,7 +63,10 @@ async def main(message: cl.Message):
         return
 
     graph = await get_graph()
-    config = {"configurable": {"thread_id": thread_id}}
+    config = {
+        "configurable": {"thread_id": thread_id},
+        "recursion_limit": 25  # Prevent infinite loops
+    }
 
     msg = cl.Message(content="")
     await msg.send()

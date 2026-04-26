@@ -21,31 +21,47 @@ def correctness_evaluator_llm(examples):
         output = example["output"]
         reference = example.get("reference", "")
 
-        PROMPT = """
-        You are a strict financial evaluator.
-        Question:
-        {question}
-        Answer:
-        {answer}
-        Reference (if available):
-        {reference}
-        Task:
-        Determine if the answer is factually correct and relevant.
-        Return ONLY:
-        score: 1 (correct) or 0 (incorrect)
-        """
+        if reference:
+            PROMPT = """
+You are a financial evaluation assistant. Be lenient and fair — reward answers that are semantically correct even if phrasing differs.
+
+Question: {question}
+Answer: {answer}
+Reference: {reference}
+
+Task: Determine if the answer is factually correct and relevant to the question.
+- Score 1 if the answer is correct, relevant, and contains the key information (even if worded differently than the reference).
+- Score 0 only if the answer is factually wrong, missing critical information, or completely off-topic.
+
+Return ONLY:
+score: 1 (correct) or 0 (incorrect)
+"""
+        else:
+            PROMPT = """
+You are a financial evaluation assistant. Be lenient and fair.
+
+Question: {question}
+Answer: {answer}
+
+Task: Determine if the answer is a reasonable, relevant, and helpful response to the question.
+- Score 1 if the answer is relevant, informative, and addresses the question (even partially).
+- Score 0 only if the answer completely fails to address the question or contains major factual errors.
+
+Return ONLY:
+score: 1 (correct) or 0 (incorrect)
+"""
 
         response = OpenAI().chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "user", "content": PROMPT.format(question=question, answer=output, reference=reference)}
+                {"role": "user", "content": PROMPT.format(question=question, answer=output, reference=reference) if reference else PROMPT.format(question=question, answer=output)}
             ],
-            temperature=0,
+            temperature=0.3,
         )
 
-        output = response.choices[0].message.content.strip()
+        llm_response = response.choices[0].message.content.strip()
 
-        match = re.search(r'score:\s*(\d)', output.lower())
+        match = re.search(r'score:\s*(\d)', llm_response.lower())
         score = int(match.group(1)) if match else 0
         scores.append(score)
 

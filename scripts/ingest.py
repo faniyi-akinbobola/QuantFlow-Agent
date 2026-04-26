@@ -12,7 +12,7 @@ from rag.chunking import split_documents
 from rag.chroma_vector_store import create_vectorstore
 from langchain_core.documents import Document
 from rag.embeddings import get_embeddings
-from pinecone import Pinecone, ServerlessSpec
+# from pinecone import Pinecone, ServerlessSpec  # Removed - not using Pinecone
 from utils.loader import load_env_var
 
 # TICKERS = ["AAPL", "TSLA", "MSFT", "AMZN"]

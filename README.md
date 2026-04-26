@@ -12,7 +12,7 @@ AI-powered stock market analysis agent with real-time data, SEC filings analysis
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Keys Required](#api-keys-required)
-- [Documentation](#documentation)
+- [Evaluation](#evaluation)
 
 ---
 
@@ -23,21 +23,22 @@ QuantFlow Agent is an intelligent stock market analysis system that combines:
 - **Real-time market data** from Yahoo Finance
 - **Technical analysis** using Alpha Vantage
 - **News aggregation** from EventRegistry
-- **SEC filings analysis** using RAG (Retrieval Augmented Generation)
+- **SEC filings analysis** using RAG (Retrieval Augmented Generation) with ChromaDB
 - **LangGraph orchestration** for complex multi-step analysis
+- **Chainlit UI** for a conversational chat interface
 
-Built with LangChain, LangGraph, and GPT-4, QuantFlow provides professional-grade market intelligence through an intuitive conversational interface.
+Built with LangChain, LangGraph, and GPT-4o-mini, QuantFlow provides professional-grade market intelligence through an intuitive conversational interface.
 
 ---
 
 ## ✨ Features
 
 - 🔴 **Real-time stock prices** and market data
-- 📊 **Financial statements** (Income, Balance Sheet, Cash Flow)
+- 📊 **Key financial metrics** (P/E, EPS, dividend yield, beta, 52-week range)
 - 📈 **Technical indicators** (RSI with buy/sell signals)
-- 📰 **Latest news** aggregation and sentiment
-- 🔍 **SEC filings search** (10-K, 10-Q deep analysis)
-- 🤖 **AI-powered insights** using GPT-4
+- 📰 **Latest news** aggregation
+- 🔍 **SEC filings search** (10-K, 10-Q deep analysis via RAG)
+- 🤖 **AI-powered insights** using GPT-4o-mini
 - 🧮 **Financial calculations** and comparisons
 - 📉 **Multi-stock comparison** (up to 5 stocks)
 - 💡 **Analyst recommendations** and price targets
@@ -55,15 +56,18 @@ cd QuantFlow-Agent
 # Install dependencies
 uv sync
 
-# Set up environment variables (see API Keys section)
+# Set up environment variables
 cp .env.example .env
 # Edit .env with your API keys
 
-# Ingest SEC filings (one-time setup)
-python scripts/ingest.py
+# Ingest SEC filings into ChromaDB (one-time setup, ~20-30 min)
+uv run python scripts/ingest.py
 
-# Run the agent
-python main.py
+# Run the chat UI
+uv run chainlit run ui/ui.py
+
+# Or run CLI mode
+uv run python main.py
 ```
 
 ---
@@ -72,16 +76,16 @@ python main.py
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                  User Interface                         │
+│                  Chainlit Chat UI                       │
 │              (Natural Language Queries)                 │
 └─────────────────────────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────┐
-│              LangGraph Agent (GPT-4o)                   │
-│  • Understands user questions                           │
+│         LangGraph Agent (GPT-4o-mini)                   │
 │  • Routes to appropriate tools                          │
 │  • Synthesizes multi-source data                        │
 │  • Generates comprehensive insights                     │
+│  • Recursion-protected (limit: 25 steps)                │
 └─────────────────────────────────────────────────────────┘
                            ↓
         ┌──────────────────┴──────────────────┐
@@ -90,20 +94,13 @@ python main.py
 │ Market Tools │  │ Company Tools│  │   RAG Tools      │
 │              │  │              │  │                  │
 │ • Price      │  │ • Info       │  │ • SEC Filings    │
-│ • Metrics    │  │ • Financials │  │ • Vector Search  │
+│ • Metrics    │  │ • Financials │  │ • ChromaDB       │
 │ • Technical  │  │ • Earnings   │  │ • Semantic Q&A   │
-│ • Compare    │  │ • Analysts   │  │ • Deep Research  │
+│ • Compare    │  │ • Analysts   │  │ • 19 Tickers     │
 └──────────────┘  └──────────────┘  └──────────────────┘
         ↓                  ↓                   ↓
-┌──────────────┐  ┌──────────────┐  ┌──────────────────┐
-│ Yahoo Finance│  │ Yahoo Finance│  │ Pinecone Vector  │
-│ (Real-time)  │  │ (Fundamentals│  │ Database         │
-└──────────────┘  └──────────────┘  │ + OpenAI         │
-                                     │ Embeddings       │
-┌──────────────┐  ┌──────────────┐  └──────────────────┘
-│ Alpha Vantage│  │ EventRegistry│
-│ (Technical)  │  │ (News)       │
-└──────────────┘  └──────────────┘
+   Yahoo Finance      Yahoo Finance       ChromaDB (local)
+   Alpha Vantage      EventRegistry       + OpenAI Embeddings
 ```
 
 ---
@@ -114,39 +111,39 @@ QuantFlow Agent provides **11 specialized tools** across 5 categories:
 
 ### Market Data Tools (4)
 
-| Tool                      | Purpose                            | Data Source   |
-| ------------------------- | ---------------------------------- | ------------- |
-| `get_current_price_yahoo` | Real-time stock prices             | Yahoo Finance |
-| `get_key_metrics`         | P/E, dividend, beta, 52-week range | Yahoo Finance |
-| `technical_analysis`      | RSI with buy/sell signals          | Alpha Vantage |
-| `compare_stocks`          | Side-by-side comparison (up to 5)  | Yahoo Finance |
+| Tool | Purpose | Data Source |
+|------|---------|-------------|
+| `get_current_price_yahoo` | Real-time stock prices | Yahoo Finance |
+| `get_key_metrics` | P/E, dividend, beta, 52-week range | Yahoo Finance |
+| `technical_analysis` | RSI with buy/sell signals | Alpha Vantage |
+| `compare_stocks` | Side-by-side comparison (up to 5) | Yahoo Finance |
 
 ### Company Analysis Tools (4)
 
-| Tool                          | Purpose                          | Data Source   |
-| ----------------------------- | -------------------------------- | ------------- |
-| `get_company_info`            | Sector, industry, description    | Yahoo Finance |
-| `get_financials`              | Income, Balance Sheet, Cash Flow | Yahoo Finance |
-| `get_earnings_history`        | EPS beats/misses, next date      | Yahoo Finance |
-| `get_analyst_recommendations` | Price targets, ratings           | Yahoo Finance |
+| Tool | Purpose | Data Source |
+|------|---------|-------------|
+| `get_company_info` | Sector, industry, description | Yahoo Finance |
+| `get_financials` | Income, Balance Sheet, Cash Flow | Yahoo Finance |
+| `get_earnings_history` | EPS beats/misses, next date | Yahoo Finance |
+| `get_analyst_recommendations` | Price targets, ratings | Yahoo Finance |
 
 ### News & Sentiment (1)
 
-| Tool                | Purpose                | Data Source   |
-| ------------------- | ---------------------- | ------------- |
+| Tool | Purpose | Data Source |
+|------|---------|-------------|
 | `fetch_latest_news` | Breaking news articles | EventRegistry |
 
 ### RAG Tools (1)
 
-| Tool                 | Purpose                      | Data Source       |
-| -------------------- | ---------------------------- | ----------------- |
-| `search_sec_filings` | AI-powered SEC filing search | Pinecone + OpenAI |
+| Tool | Purpose | Data Source |
+|------|---------|-------------|
+| `search_sec_filings` | AI-powered SEC filing search | ChromaDB + OpenAI |
 
 ### Utility Tools (1)
 
-| Tool         | Purpose              | Technology |
-| ------------ | -------------------- | ---------- |
-| `calculator` | Safe math evaluation | NumExpr    |
+| Tool | Purpose | Technology |
+|------|---------|------------|
+| `calculator` | Safe math evaluation | NumExpr |
 
 **📖 For detailed tool documentation, see [TOOLS.md](TOOLS.md)**
 
@@ -156,8 +153,8 @@ QuantFlow Agent provides **11 specialized tools** across 5 categories:
 
 ### Prerequisites
 
-- Python 3.12+
-- `uv` package manager
+- Python 3.11+
+- `uv` package manager ([install guide](https://docs.astral.sh/uv/getting-started/installation/))
 
 ### Setup Steps
 
@@ -182,10 +179,6 @@ Create a `.env` file in the project root:
 # OpenAI (required)
 OPENAI_API_KEY=your_openai_api_key
 
-# Pinecone (required for RAG)
-PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_INDEX_NAME=finagent
-
 # Alpha Vantage (required for technical analysis)
 ALPHAVANTAGE_KEY=your_alphavantage_key
 
@@ -200,169 +193,102 @@ EMAIL=your.email@example.com
 4. **Ingest SEC filings** (one-time setup):
 
 ```bash
-python scripts/ingest.py
+uv run python scripts/ingest.py
 ```
 
-This will:
+This downloads and ingests 10-K and 10-Q filings for **19 tickers** into a local ChromaDB vector store:
 
-- Download 10-K and 10-Q filings for AAPL, TSLA, MSFT, AMZN
-- Chunk documents into searchable segments
-- Create embeddings using OpenAI
-- Store in Pinecone vector database
-- **Time:** ~10-15 minutes
-- **Cost:** ~$0.50-1.00 in OpenAI embedding costs
+> AAPL, MSFT, GOOGL, AMZN, META, NVDA, TSLA, NFLX, JPM, V, MA, BAC, JNJ, UNH, LLY, WMT, PG, KO, PEP
+
+- **~30,000 document chunks** stored locally
+- **Time:** ~20-30 minutes
+- **Cost:** ~$0.00 (uses local ChromaDB, no Pinecone needed)
 
 ---
 
-## 📚 Usage
+## �� Usage
 
-### Command Line
+### Chat UI (Chainlit)
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Run the agent
-python main.py
+uv run chainlit run ui/ui.py
 ```
 
-### Using Individual Tools
+Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-```python
-from tools import (
-    get_current_price_yahoo,
-    get_key_metrics,
-    search_sec_filings,
-    compare_stocks,
-)
+### CLI Mode
 
-# Get current price
-price = get_current_price_yahoo("AAPL")
-print(price)
-
-# Get valuation metrics
-metrics = get_key_metrics("MSFT")
-print(metrics)
-
-# Compare stocks
-comparison = compare_stocks("AAPL,MSFT,GOOGL")
-print(comparison)
-
-# Search SEC filings
-risks = search_sec_filings("What are the risk factors?", ticker="AAPL")
-print(risks)
+```bash
+uv run python main.py
 ```
-
-### Using the Agent (Coming Soon)
-
-```python
-from graph.builder import create_agent
-
-agent = create_agent()
-
-# Ask a complex question
-response = agent.invoke({
-    "messages": ["Compare Apple and Microsoft. Which is a better investment?"]
-})
-
-print(response["messages"][-1].content)
-```
-
-The agent will:
-
-1. Call `get_key_metrics("AAPL")` and `get_key_metrics("MSFT")`
-2. Call `get_analyst_recommendations()` for both
-3. Call `search_sec_filings()` for strategic insights
-4. Synthesize all data into a comprehensive recommendation
 
 ### Example Queries
 
 **Simple queries:**
-
 - "What's the current price of Apple?"
 - "Show me Tesla's financial statements"
 - "What's the latest news on Microsoft?"
 
-**Complex queries:**
-
+**Complex investment queries:**
+- "Should I invest in AAPL right now? Give me a full analysis."
 - "Compare AAPL, MSFT, and GOOGL. Which has the best value?"
 - "What are Amazon's main business risks according to their 10-K?"
 - "Is NVDA overbought based on technical analysis?"
-- "Show me Apple's earnings history and analyst recommendations"
 
 ---
 
 ## 🔑 API Keys Required
 
-| Service           | Purpose            | Cost                                | Sign Up                                            |
-| ----------------- | ------------------ | ----------------------------------- | -------------------------------------------------- |
-| **OpenAI**        | LLM + Embeddings   | Pay-per-use (~$0.01-0.03/1K tokens) | [platform.openai.com](https://platform.openai.com) |
-| **Pinecone**      | Vector Database    | Free tier (1 index, 5M vectors)     | [pinecone.io](https://pinecone.io)                 |
-| **Alpha Vantage** | Technical Analysis | Free (5 calls/min, 500/day)         | [alphavantage.co](https://www.alphavantage.co)     |
-| **EventRegistry** | News Articles      | Free tier (1000 calls/day)          | [eventregistry.org](https://eventregistry.org)     |
+| Service | Purpose | Cost | Sign Up |
+|---------|---------|------|---------|
+| **OpenAI** | LLM + Embeddings | Pay-per-use | [platform.openai.com](https://platform.openai.com) |
+| **Alpha Vantage** | Technical Analysis | Free (5 calls/min) | [alphavantage.co](https://www.alphavantage.co) |
+| **EventRegistry** | News Articles | Free tier (1000/day) | [eventregistry.org](https://eventregistry.org) |
 
 **No API key needed:**
-
-- Yahoo Finance (via `yfinance` library)
-
-### Cost Estimate
-
-**Initial setup:**
-
-- SEC filings ingestion: ~$0.50-1.00 (one-time)
-
-**Per query:**
-
-- With RAG: ~$0.01-0.05 (OpenAI API + embeddings)
-- Without RAG: ~$0.005-0.02 (OpenAI API only)
-
-**Monthly (100 queries):**
-
-- Estimated: $2-5
+- Yahoo Finance (via `yfinance`)
+- ChromaDB (local, no cloud account required)
 
 ---
 
-## 📖 Documentation
+## 📊 Evaluation
 
-- **[TOOLS.md](TOOLS.md)** - Comprehensive tool reference with examples
-- **[Architecture](#architecture)** - System design overview
-- **[API Keys](#api-keys-required)** - Required services and costs
+The project includes a comprehensive evaluation framework in `evals/`.
 
----
+```bash
+uv run python evals/runners/run_local.py
+```
 
-## 📊 Tool Summary
+**Latest results (95 test cases across 6 datasets):**
 
-| Category             | Tools   | Free?                                     | Real-time?             |
-| -------------------- | ------- | ----------------------------------------- | ---------------------- |
-| **Market Data**      | 4 tools | ✅ Yes (except Alpha Vantage rate limits) | ✅ Yes                 |
-| **Company Analysis** | 4 tools | ✅ Yes                                    | ✅ Yes                 |
-| **News**             | 1 tool  | ⚠️ Free tier (1000/day)                   | ✅ Yes                 |
-| **RAG**              | 1 tool  | ❌ Paid (OpenAI)                          | ❌ No (offline search) |
-| **Utilities**        | 1 tool  | ✅ Yes                                    | ✅ Yes                 |
+| Metric | Score |
+|--------|-------|
+| Tool Usage | 93.33% |
+| Correctness | 93.33% |
+| Reasoning Quality | 86.67% |
+| Overall Pass Rate | ~99% |
+
+See `evals/README.md` for full documentation.
 
 ---
 
 ## 🚀 Roadmap
 
 - [x] Real-time market data tools
-- [x] SEC filings RAG search
+- [x] SEC filings RAG search (ChromaDB, 19 tickers, ~30K chunks)
 - [x] Technical analysis (RSI)
 - [x] News aggregation
-- [ ] Complete LangGraph agent implementation
-- [ ] Web UI (Streamlit/Gradio)
-- [ ] More technical indicators (MACD, Bollinger Bands, Moving Averages)
+- [x] LangGraph agent with multi-tool orchestration
+- [x] Chainlit chat UI
+- [x] Comprehensive evaluation framework
+- [ ] More technical indicators (MACD, Bollinger Bands)
 - [ ] Portfolio tracking and management
-- [ ] Backtesting capabilities
 - [ ] Chart generation and visualization
-- [ ] Options data and analysis
-- [ ] Real-time alerts and notifications
 - [ ] Expand SEC filing coverage to more tickers
 
 ---
 
 ## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -374,30 +300,21 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
-## 📧 Contact
+## ⭐ Built With
 
-**Author:** Akinbobola Faniyi  
-**GitHub:** [@faniyi-akinbobola](https://github.com/faniyi-akinbobola)  
-**Project:** [QuantFlow-Agent](https://github.com/faniyi-akinbobola/QuantFlow-Agent)
-
----
-
-## ⭐ Acknowledgments
-
-Built with:
-
-- [LangChain](https://langchain.com) - LLM application framework
-- [LangGraph](https://langchain-ai.github.io/langgraph/) - Agent orchestration
-- [OpenAI](https://openai.com) - GPT-4 and embeddings
-- [Pinecone](https://pinecone.io) - Vector database
-- [yfinance](https://github.com/ranaroussi/yfinance) - Yahoo Finance data
-- [Alpha Vantage](https://www.alphavantage.co) - Technical indicators
-- [EventRegistry](https://eventregistry.org) - News aggregation
-- [edgartools](https://github.com/bellingcat/edgartools) - SEC filings
+- [LangChain](https://langchain.com) — LLM application framework
+- [LangGraph](https://langchain-ai.github.io/langgraph/) — Agent orchestration
+- [Chainlit](https://chainlit.io) — Chat UI
+- [OpenAI](https://openai.com) — GPT-4o-mini and embeddings
+- [ChromaDB](https://www.trychroma.com) — Local vector database
+- [yfinance](https://github.com/ranaroussi/yfinance) — Yahoo Finance data
+- [Alpha Vantage](https://www.alphavantage.co) — Technical indicators
+- [EventRegistry](https://eventregistry.org) — News aggregation
+- [edgartools](https://github.com/bellingcat/edgartools) — SEC filings
 
 ---
 

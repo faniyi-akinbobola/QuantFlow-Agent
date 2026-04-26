@@ -28,7 +28,7 @@ from evals.metrics.usage import avg_tools_per_query, overuse_rate, tool_usage_di
 
 from graph.graph import workflow
 from graph.state import AgentState
-from memory.memory import make_checkpointer
+from langgraph.checkpoint.memory import MemorySaver
 
 
 class LocalEvaluationRunner:
@@ -69,14 +69,17 @@ class LocalEvaluationRunner:
         start_time = time.time()
         
         try:
-            # Get checkpointer
-            checkpointer = await make_checkpointer()
+            # Use fresh in-memory checkpointer per eval run to avoid stale state
+            checkpointer = MemorySaver()
             
             # Compile graph with checkpointer
             app = workflow.compile(checkpointer=checkpointer)
             
-            # Run the agent
-            config = {"configurable": {"thread_id": thread_id}}
+            # Run the agent with recursion limit to prevent infinite loops
+            config = {
+                "configurable": {"thread_id": thread_id},
+                "recursion_limit": 25
+            }
             input_state = {"messages": [("user", question)]}
             
             result = await app.ainvoke(input_state, config)

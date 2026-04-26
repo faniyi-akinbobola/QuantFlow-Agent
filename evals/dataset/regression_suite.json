@@ -109,11 +109,11 @@
   },
   {
     "id": "reg_014",
-    "question": "What's the latest sentiment on AMD from both news and analysts?",
+    "question": "What's the latest sentiment on BAC from both news and analysts?",
     "expected_behavior": "multi_tool_call",
     "expected_tools": ["fetch_latest_news", "get_analyst_recommendations"],
     "mode": "contains",
-    "expected_answer_contains": ["AMD", "sentiment", "news", "analyst"],
+    "expected_answer_contains": ["BAC", "Bank of America", "sentiment", "news", "analyst"],
     "difficulty": "medium"
   },
   {

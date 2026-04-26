@@ -8,53 +8,30 @@ wheels/
 
 # Virtual environments
 .venv
+.venv/
 
 # Environment variables
 .env
 
 # ChromaDB / Vector DB
 data/chroma_db/
-
-# General vector DB patterns (optional but good)
-*.bin
-*.sqlite3
-*.pkl
-
-# Python env
-.venv/
-
-# Cache
-__pycache__/
-
-# Update .gitignore
-cat >> .gitignore << 'EOF'
-data/
-*.db
-*.sqlite3
-*.pdf
-**/chroma_db/
-EOF
-
-cat >> .gitignore << 'EOF'
-
-# === Large / Generated Files (DO NOT COMMIT) ===
-
-# Vector DB (Chroma)
-data/chroma_db/
+data/chroma_db_backup/
 **/chroma_db/
 **/chroma.sqlite3
 
 # Binary / artifacts
 *.bin
-*.sqlite3
-*.pickle
 *.pkl
+*.pickle
 
 # Memory checkpoints
+memory/checkpoints.db
 **/checkpoints.db
-memory/*.db
 
-# Eval reports (regenerated - keep only README)
+# Log files
+*.log
+
+# Eval reports (regenerated — keep only README)
 evals/reports/*.json
 evals/reports/*.html
 evals/reports/*.md
@@ -62,12 +39,3 @@ evals/reports/*.md
 
 # Eval cache
 .eval_cache/
-
-# Python
-.venv/
-__pycache__/
-
-# Env
-.env
-
-EOF

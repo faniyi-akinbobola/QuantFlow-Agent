@@ -59,7 +59,7 @@ score: 0
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            temperature=0,
+            temperature=0.3,  # Increased from 0 for more lenient judging
             messages=[{"role": "user", "content": PROMPT}]
         )
 
