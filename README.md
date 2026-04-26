@@ -1,3 +1,13 @@
+---
+title: QuantFlow Agent
+emoji: 📈
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # QuantFlow Agent 🚀
 
 AI-powered stock market analysis agent with real-time data, SEC filings analysis, and comprehensive financial tools.

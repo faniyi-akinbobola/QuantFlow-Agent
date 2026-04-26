@@ -30,6 +30,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # It is excluded from .gitignore but included here via COPY . .
 # No ingest step needed at runtime.
 
-EXPOSE 8000
+EXPOSE 7860
 
-CMD ["chainlit", "run", "ui/ui.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["chainlit", "run", "ui/ui.py", "--host", "0.0.0.0", "--port", "7860"]
