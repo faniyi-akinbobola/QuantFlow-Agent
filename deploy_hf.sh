@@ -2,21 +2,19 @@
 # deploy_hf.sh — Push this project to a Hugging Face Space
 #
 # Usage:
-#   bash deploy_hf.sh <hf-username> <space-name>
-#
-# Example:
-#   bash deploy_hf.sh faniyi-akinbobola quantflow-agent
+#   bash deploy_hf.sh                          # defaults to Faniyi/quantflow-agent
+#   bash deploy_hf.sh <hf-username> <space>    # custom
 #
 # Prerequisites:
 #   - git lfs installed  (brew install git-lfs)
-#   - huggingface-cli installed and logged in:
-#       pip install huggingface_hub
-#       huggingface-cli login
+#   - hf CLI logged in:
+#       uv tool install hf
+#       hf auth login
 
 set -e
 
-HF_USER="${1:?Usage: bash deploy_hf.sh <hf-username> <space-name>}"
-SPACE_NAME="${2:?Usage: bash deploy_hf.sh <hf-username> <space-name>}"
+HF_USER="${1:-Faniyi}"
+SPACE_NAME="${2:-quantflow-agent}"
 SPACE_URL="https://huggingface.co/spaces/${HF_USER}/${SPACE_NAME}"
 REMOTE_URL="https://huggingface.co/spaces/${HF_USER}/${SPACE_NAME}"
 
