@@ -15,6 +15,9 @@ import asyncio
 from langchain_core.messages import HumanMessage
 from graph.graph import workflow
 from memory.memory import make_checkpointer
+from utils.tracing import setup_tracing
+
+setup_tracing()
 
 
 WELCOME_MESSAGE = """

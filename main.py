@@ -14,6 +14,10 @@ import subprocess
 import sys
 import os
 
+# Initialise LangSmith tracing before starting the UI
+from utils.tracing import setup_tracing
+setup_tracing()
+
 
 def run_ui():
     """Run the Chainlit UI by executing chainlit command."""
