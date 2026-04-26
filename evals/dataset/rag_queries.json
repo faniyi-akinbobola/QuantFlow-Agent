@@ -1,0 +1,72 @@
+[
+  {
+    "id": "rag_001",
+    "question": "What was Apple's revenue in their latest 10-K filing?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["AAPL_10K_2024"],
+    "category": "financial_metrics"
+  },
+  {
+    "id": "rag_002",
+    "question": "What risk factors did Microsoft mention in their latest SEC filing?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["MSFT_10K_2024"],
+    "category": "risk_analysis"
+  },
+  {
+    "id": "rag_003",
+    "question": "According to Tesla's 10-Q, what were their operating expenses last quarter?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["TSLA_10Q_2024_Q2"],
+    "category": "financial_metrics"
+  },
+  {
+    "id": "rag_004",
+    "question": "What does Amazon's latest filing say about their AWS business segment?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["AMZN_10K_2024"],
+    "category": "business_segments"
+  },
+  {
+    "id": "rag_005",
+    "question": "Summarize Google's revenue breakdown by segment from their 10-K",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["GOOGL_10K_2024"],
+    "category": "revenue_analysis"
+  },
+  {
+    "id": "rag_006",
+    "question": "What did NVIDIA report about their data center revenue in the latest filing?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["NVDA_10K_2024"],
+    "category": "segment_performance"
+  },
+  {
+    "id": "rag_007",
+    "question": "According to Meta's SEC filings, what are their main sources of revenue?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["META_10K_2024"],
+    "category": "revenue_sources"
+  },
+  {
+    "id": "rag_008",
+    "question": "What did Netflix mention about subscriber growth in their latest 10-Q?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["NFLX_10Q_2024_Q3"],
+    "category": "growth_metrics"
+  },
+  {
+    "id": "rag_009",
+    "question": "What did JPMorgan report about credit losses in their latest 10-K?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["JPM_10K_2024"],
+    "category": "risk_metrics"
+  },
+  {
+    "id": "rag_010",
+    "question": "According to Visa's SEC filings, what are their main growth drivers?",
+    "expected_behavior": "retrieve_and_answer",
+    "relevant_doc_ids": ["V_10K_2024"],
+    "category": "business_strategy"
+  }
+]

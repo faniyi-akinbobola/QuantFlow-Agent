@@ -8,6 +8,36 @@ wheels/
 
 # Virtual environments
 .venv
+.venv/
 
 # Environment variables
 .env
+
+# ChromaDB / Vector DB
+data/chroma_db/
+data/chroma_db_backup/
+**/chroma_db/
+**/chroma.sqlite3
+
+# Binary / artifacts
+*.bin
+*.pkl
+*.pickle
+
+# Memory checkpoints
+memory/checkpoints.db
+**/checkpoints.db
+
+# Log files
+*.log
+
+# Eval reports (regenerated — keep only README)
+evals/reports/*.json
+evals/reports/*.html
+evals/reports/*.md
+!evals/reports/README.md
+
+# Eval cache
+.eval_cache/
+memory/checkpoints.db-wal
+memory/checkpoints.db-shm

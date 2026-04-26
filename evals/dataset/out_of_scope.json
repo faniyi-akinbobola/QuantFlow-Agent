@@ -1,0 +1,92 @@
+[
+  {
+    "id": "oos_001",
+    "question": "What is Bitcoin?",
+    "expected_behavior": "out_of_scope",
+    "category": "cryptocurrency"
+  },
+  {
+    "id": "oos_002",
+    "question": "Who is the president of France?",
+    "expected_behavior": "out_of_scope",
+    "category": "politics"
+  },
+  {
+    "id": "oos_003",
+    "question": "Explain quantum physics",
+    "expected_behavior": "out_of_scope",
+    "category": "science"
+  },
+  {
+    "id": "oos_004",
+    "question": "What's the weather like today?",
+    "expected_behavior": "out_of_scope",
+    "category": "weather"
+  },
+  {
+    "id": "oos_005",
+    "question": "How do I bake a cake?",
+    "expected_behavior": "out_of_scope",
+    "category": "cooking"
+  },
+  {
+    "id": "oos_006",
+    "question": "Tell me about Ethereum",
+    "expected_behavior": "out_of_scope",
+    "category": "cryptocurrency"
+  },
+  {
+    "id": "oos_007",
+    "question": "What's the score of the Lakers game?",
+    "expected_behavior": "out_of_scope",
+    "category": "sports"
+  },
+  {
+    "id": "oos_008",
+    "question": "Recommend a good restaurant in New York",
+    "expected_behavior": "out_of_scope",
+    "category": "dining"
+  },
+  {
+    "id": "oos_009",
+    "question": "How do I learn Python?",
+    "expected_behavior": "out_of_scope",
+    "category": "programming"
+  },
+  {
+    "id": "oos_010",
+    "question": "What's the latest movie release?",
+    "expected_behavior": "out_of_scope",
+    "category": "entertainment"
+  },
+  {
+    "id": "oos_011",
+    "question": "Should I buy NFTs?",
+    "expected_behavior": "out_of_scope",
+    "category": "cryptocurrency"
+  },
+  {
+    "id": "oos_012",
+    "question": "What's the best car to buy?",
+    "expected_behavior": "out_of_scope",
+    "category": "automotive"
+  },
+  {
+    "id": "oos_013",
+    "question": "Help me with my math homework",
+    "expected_behavior": "out_of_scope",
+    "category": "education"
+  },
+  {
+    "id": "oos_014",
+    "question": "What's the capital of Brazil?",
+    "expected_behavior": "out_of_scope",
+    "category": "geography"
+  },
+  {
+    "id": "oos_015",
+    "question": "How do I fix my computer?",
+    "expected_behavior": "out_of_scope",
+    "category": "tech_support"
+  }
+]

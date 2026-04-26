@@ -1,4 +1,4 @@
-import os
+import time
 from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore  # Updated import
 from rag.embeddings import DIMENSIONS, get_embeddings
@@ -14,7 +14,7 @@ embeddings = get_embeddings()
 
 def create_vectorstore(docs, embeddings):
     """
-    Docstring for create_vectorstore
+    Create and populate Pinecone vector store with retry logic.
     
     :param docs: The documents to add to the vector store
     :type docs: list
@@ -23,6 +23,7 @@ def create_vectorstore(docs, embeddings):
     :return: The created vector store
     :rtype: PineconeVectorStore
     """
+    print(f"Creating vector store with {len(docs)} documents...")
     # Create index if it doesn't exist
     if INDEX_NAME not in [i["name"] for i in pc.list_indexes()]:
         pc.create_index(
@@ -40,7 +41,32 @@ def create_vectorstore(docs, embeddings):
         text_key="text"
     )
 
-    vectorstore.add_documents(docs)
+        # Process in smaller batches with retry logic
+    batch_size = 100
+    max_retries = 5
+    
+    for i in range(0, len(docs), batch_size):
+        batch = docs[i:i + batch_size]
+        batch_num = i // batch_size + 1
+        total_batches = (len(docs) + batch_size - 1) // batch_size
+        
+        for attempt in range(max_retries):
+            try:
+                print(f"Processing batch {batch_num}/{total_batches} ({len(batch)} docs)...", end=" ")
+                vectorstore.add_documents(batch)
+                print("✓")
+                break  # Success, move to next batch
+                
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    wait_time = (attempt + 1) * 10  # 5s, 10s, 15s
+                    print(f"⚠️  Network error, retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    print(f"❌ Failed after {max_retries} attempts")
+                    raise Exception(f"Failed to process batch {batch_num}: {e}")
+
+    print(f"✅ All {total_batches} batches processed successfully!")
 
     return vectorstore
 

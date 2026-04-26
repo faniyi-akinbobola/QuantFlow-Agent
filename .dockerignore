@@ -1,0 +1,24 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.py[oc]
+*.log
+.env
+.env.example
+.python-version
+
+# Tests and evals (not needed at runtime)
+tests/
+evals/
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Backup DB (use primary only)
+data/chroma_db_backup/
+
+# Scripts (ingest already done)
+scripts/

@@ -1,5 +1,5 @@
 """LangGraph workflow for QuantFlow financial agent."""
 
-from graph.graph import app
+from graph.graph import graph
 
-__all__ = ["app"]
+__all__ = ["graph"]

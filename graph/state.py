@@ -10,5 +10,3 @@ class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
     """Full conversation history with automatic message deduplication."""
 
-    tools_used: list[str]      # Only for UI display
-    """List of tools used in the conversation, extracted from message metadata."""

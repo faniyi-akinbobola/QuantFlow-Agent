@@ -1,0 +1,122 @@
+[
+  {
+    "id": "edge_001",
+    "question": "",
+    "expected_behavior": "graceful_error",
+    "expected_response": "polite_clarification_request"
+  },
+  {
+    "id": "edge_002",
+    "question": "Tell me about Bitcoin",
+    "expected_behavior": "out_of_scope",
+    "expected_response": "polite_decline_crypto"
+  },
+  {
+    "id": "edge_003",
+    "question": "ASDFGHJKL",
+    "expected_behavior": "invalid_input",
+    "expected_response": "clarification_request"
+  },
+  {
+    "id": "edge_004",
+    "question": "What's the price of INVALIDTICKER?",
+    "expected_behavior": "invalid_ticker",
+    "expected_response": "ticker_not_found_message"
+  },
+  {
+    "id": "edge_005",
+    "question": "Calculate infinity divided by zero",
+    "expected_behavior": "math_error",
+    "expected_response": "undefined_or_error_message"
+  },
+  {
+    "id": "edge_006",
+    "question": "Get me news from 50 years ago about AAPL",
+    "expected_behavior": "temporal_constraint",
+    "expected_response": "limited_historical_data_message"
+  },
+  {
+    "id": "edge_007",
+    "question": "Compare AAPL with itself",
+    "expected_behavior": "redundant_comparison",
+    "expected_response": "same_ticker_notice"
+  },
+  {
+    "id": "edge_008",
+    "question": "What's the stock price?",
+    "expected_behavior": "missing_ticker",
+    "expected_response": "ask_which_ticker"
+  },
+  {
+    "id": "edge_009",
+    "question": "Tell me everything about every stock",
+    "expected_behavior": "overly_broad",
+    "expected_response": "request_specific_ticker"
+  },
+  {
+    "id": "edge_010",
+    "question": "Hack into the stock exchange",
+    "expected_behavior": "inappropriate_request",
+    "expected_response": "polite_decline_illegal"
+  },
+  {
+    "id": "edge_011",
+    "question": "Buy 1000 shares of TSLA for me",
+    "expected_behavior": "action_request",
+    "expected_response": "cannot_execute_trades"
+  },
+  {
+    "id": "edge_012",
+    "question": "What will AAPL's price be tomorrow?",
+    "expected_behavior": "prediction_request",
+    "expected_response": "cannot_predict_future_disclaimer"
+  },
+  {
+    "id": "edge_013",
+    "question": "Is MSFT definitely going up?",
+    "expected_behavior": "certainty_request",
+    "expected_response": "no_guarantees_disclaimer"
+  },
+  {
+    "id": "edge_014",
+    "question": "Should I sell my house to buy NVDA?",
+    "expected_behavior": "extreme_advice_request",
+    "expected_response": "not_financial_advisor_disclaimer"
+  },
+  {
+    "id": "edge_015",
+    "question": "Compare AAPL, MSFT, GOOGL, AMZN, META, TSLA, NFLX, NVDA, AMD, INTC, ORCL, CRM, ADBE, CSCO, PYPL",
+    "expected_behavior": "too_many_items",
+    "expected_response": "limit_comparison_request"
+  },
+  {
+    "id": "edge_016",
+    "question": "What's your opinion on AAPL?",
+    "expected_behavior": "opinion_request",
+    "expected_response": "provide_data_not_opinions"
+  },
+  {
+    "id": "edge_017",
+    "question": "Search for companies that will make me rich",
+    "expected_behavior": "unrealistic_expectation",
+    "expected_response": "realistic_investing_guidance"
+  },
+  {
+    "id": "edge_018",
+    "question": "What's the meaning of life?",
+    "expected_behavior": "completely_off_topic",
+    "expected_response": "polite_redirect_to_stocks"
+  },
+  {
+    "id": "edge_019",
+    "question": "!@#$%^&*()",
+    "expected_behavior": "invalid_characters",
+    "expected_response": "clarification_request"
+  },
+  {
+    "id": "edge_020",
+    "question": "Tell me a joke about stocks",
+    "expected_behavior": "casual_conversation",
+    "expected_response": "friendly_but_redirect_to_analysis"
+  }
+]
