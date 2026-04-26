@@ -39,3 +39,5 @@ evals/reports/*.md
 
 # Eval cache
 .eval_cache/
+memory/checkpoints.db-wal
+memory/checkpoints.db-shm
