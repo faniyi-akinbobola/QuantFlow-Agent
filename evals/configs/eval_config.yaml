@@ -12,32 +12,32 @@ datasets:
     path: "evals/dataset/rag_queries.json"
     description: "RAG retrieval quality tests"
     enabled: true
-    sample_size: null  # null = use all, or specify number for sampling
-    
+    sample_size: null # null = use all, or specify number for sampling
+
   investment_analysis:
     path: "evals/dataset/investment_analysis.json"
     description: "Complex investment analysis scenarios"
     enabled: true
     sample_size: null
-    
+
   tool_usage_cases:
     path: "evals/dataset/tool_usage_cases.json"
     description: "Tool selection and usage validation"
     enabled: true
     sample_size: null
-    
+
   edge_cases:
     path: "evals/dataset/edge_cases.json"
     description: "Edge cases and error handling"
     enabled: true
     sample_size: null
-    
+
   out_of_scope:
     path: "evals/dataset/out_of_scope.json"
     description: "Out-of-scope query detection"
     enabled: true
     sample_size: null
-    
+
   regression_suite:
     path: "evals/dataset/regression_suite.json"
     description: "Regression tests for core functionality"
@@ -50,19 +50,19 @@ evaluators:
   correctness:
     enabled: true
     weight: 1.0
-    threshold: 80  # Minimum acceptable score (%)
+    threshold: 80 # Minimum acceptable score (%)
     model: "gpt-4o-mini"
     temperature: 0
     applicable_to: ["investment_analysis", "rag_queries", "regression_suite"]
-    
+
   faithfulness:
     enabled: true
     weight: 1.0
-    threshold: 90  # High bar for hallucination prevention
+    threshold: 90 # High bar for hallucination prevention
     model: "gpt-4o-mini"
     temperature: 0
     applicable_to: ["rag_queries", "investment_analysis"]
-    
+
   reasoning_quality:
     enabled: true
     weight: 0.8
@@ -70,7 +70,7 @@ evaluators:
     model: "gpt-4o-mini"
     temperature: 0
     applicable_to: ["investment_analysis", "regression_suite"]
-    
+
   grounding:
     enabled: true
     weight: 1.0
@@ -78,18 +78,19 @@ evaluators:
     model: "gpt-4o-mini"
     temperature: 0
     applicable_to: ["rag_queries"]
-  
+
   # Deterministic evaluators
   tool_usage:
     enabled: true
     weight: 1.0
     threshold: 85
-    applicable_to: ["tool_usage_cases", "investment_analysis", "regression_suite"]
-    
+    applicable_to:
+      ["tool_usage_cases", "investment_analysis", "regression_suite"]
+
   retrieval_metrics:
     enabled: true
     weight: 1.0
-    k: 5  # Top-k for retrieval metrics
+    k: 5 # Top-k for retrieval metrics
     thresholds:
       recall@5: 70
       precision@5: 60
@@ -102,26 +103,26 @@ metrics:
   latency:
     enabled: true
     thresholds:
-      mean: 5.0  # seconds
-      p95: 10.0  # seconds
-      p99: 15.0  # seconds
-      
+      mean: 5.0 # seconds
+      p95: 10.0 # seconds
+      p99: 15.0 # seconds
+
   cost:
     enabled: true
-    budget_per_query: 0.05  # USD
-    total_budget: 10.0  # USD for full eval run
+    budget_per_query: 0.05 # USD
+    total_budget: 10.0 # USD for full eval run
     track_models: true
-    
+
   usage:
     enabled: true
     thresholds:
       avg_tools_per_query: 3.0
-      overuse_rate: 15.0  # max % of queries using >3 tools
+      overuse_rate: 15.0 # max % of queries using >3 tools
 
 # Out-of-Scope Detection
 out_of_scope:
   enabled: true
-  threshold: 95  # % of out-of-scope queries correctly identified
+  threshold: 95 # % of out-of-scope queries correctly identified
   expected_response_patterns:
     - "I can only help with"
     - "not able to assist"
@@ -144,28 +145,28 @@ reporting:
   include_examples: true
   max_examples_per_category: 5
   generate_charts: true
-  
+
 # CI/CD Integration
 ci:
   fail_on_threshold_breach: true
-  fail_fast: false  # Continue even if one evaluator fails
+  fail_fast: false # Continue even if one evaluator fails
   parallel_execution: true
   max_workers: 4
-  timeout_per_query: 30  # seconds
-  
+  timeout_per_query: 30 # seconds
+
 # LangSmith Integration (optional)
 langsmith:
-  enabled: false  # Set to true to enable LangSmith tracking
+  enabled: false # Set to true to enable LangSmith tracking
   project_name: "quantflow-evals"
   dataset_name: "stock-agent-eval-suite"
   tags: ["evaluation", "stock-agent", "production"]
-  
+
 # Sampling Strategy
 sampling:
-  enabled: false  # Enable for faster dev cycles
-  strategy: "stratified"  # random, stratified, or balanced
-  size: 20  # Number of samples when enabled
-  seed: 42  # For reproducibility
+  enabled: false # Enable for faster dev cycles
+  strategy: "stratified" # random, stratified, or balanced
+  size: 20 # Number of samples when enabled
+  seed: 42 # For reproducibility
 
 # Advanced Settings
 advanced:
@@ -173,6 +174,6 @@ advanced:
   cache_dir: ".eval_cache"
   retry_on_failure: true
   max_retries: 3
-  retry_delay: 2  # seconds
+  retry_delay: 2 # seconds
   parallel_llm_calls: true
   max_concurrent_llm_calls: 5

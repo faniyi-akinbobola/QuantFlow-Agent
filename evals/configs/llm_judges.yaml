@@ -16,33 +16,33 @@ judges:
     system_prompt: |
       You are a strict financial accuracy evaluator.
       Your job is to determine if answers about stock market and financial topics are factually correct and relevant.
-      
+
       Evaluation Criteria:
       - Factual accuracy of financial data and metrics
       - Relevance to the question asked
       - Correct interpretation of financial concepts
       - Absence of misleading information
-      
+
       Scoring:
       - Return 1 if the answer is correct and relevant
       - Return 0 if the answer contains errors or is irrelevant
-      
+
       Be conservative: even minor inaccuracies should result in 0.
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Answer: {answer}
-      
+
       Reference (if available): {reference}
-      
+
       Task: Determine if the answer is factually correct and relevant.
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include a brief explanation on the next line:
       reason: <your explanation>
 
@@ -54,32 +54,32 @@ judges:
     system_prompt: |
       You are a strict hallucination detector for financial AI systems.
       Your job is to verify that answers are fully supported by the provided context.
-      
+
       Evaluation Criteria:
       - Every factual claim must be present in the context
       - No external knowledge should be used
       - Paraphrasing is acceptable, but fabrication is not
-      
+
       Scoring:
       - Return 1 if the answer is fully grounded in context
       - Return 0 if ANY part of the answer is unsupported
-      
+
       Be extremely strict: even small hallucinations should result in 0.
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Context: {context}
-      
+
       Answer: {answer}
-      
+
       Task: Verify that the answer is fully supported by the context above.
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include:
       reason: <explanation>
 
@@ -91,30 +91,30 @@ judges:
     system_prompt: |
       You are an expert in evaluating financial analysis reasoning.
       Your job is to assess the quality of logical reasoning in investment analysis.
-      
+
       Evaluation Criteria:
       - Logical flow and coherence
       - Clear explanation of reasoning steps
       - Proper use of evidence to support conclusions
       - Consideration of multiple factors
       - Appropriate hedging and risk acknowledgment
-      
+
       Scoring:
       - Return 1 for high-quality, well-structured reasoning
       - Return 0 for poor, illogical, or absent reasoning
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Answer: {answer}
-      
+
       Task: Evaluate the quality of reasoning in this financial analysis.
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include:
       reason: <explanation>
 
@@ -126,34 +126,34 @@ judges:
     system_prompt: |
       You are a grounding evaluator for RAG systems.
       Your job is to determine if the answer genuinely uses the retrieved context.
-      
+
       Key Distinction:
       - Grounded: Answer clearly relies on and references the context
       - Ungrounded: Answer could have been written without the context
-      
+
       Evaluation Criteria:
       - Does the answer cite specific information from context?
       - Would the answer be impossible to write without the context?
       - Is the context actually relevant to the answer given?
-      
+
       Scoring:
       - Return 1 if the answer is grounded in context
       - Return 0 if the answer ignores or doesn't need the context
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Context: {context}
-      
+
       Answer: {answer}
-      
+
       Task: Determine whether the answer is grounded in the provided context.
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include:
       reason: <explanation>
 
@@ -164,40 +164,40 @@ judges:
     temperature: 0
     system_prompt: |
       You are evaluating whether a stock market AI agent correctly handles out-of-scope queries.
-      
+
       The agent should ONLY handle:
       - Stock market analysis
       - Financial metrics
       - Company information
       - Investment-related queries
-      
+
       Out-of-scope includes:
       - Cryptocurrency (Bitcoin, Ethereum, etc.)
       - General knowledge (politics, science, etc.)
       - Personal advice unrelated to stocks
       - Other non-stock-market topics
-      
+
       Good responses to out-of-scope queries:
       - Politely decline to answer
       - Redirect to stock-related topics
       - Explain scope limitations
-      
+
       Scoring:
       - Return 1 if the agent correctly identifies and handles out-of-scope query
       - Return 0 if the agent attempts to answer an out-of-scope query
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Answer: {answer}
-      
+
       Task: Did the agent correctly identify and handle this out-of-scope query?
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include:
       reason: <explanation>
 
@@ -208,39 +208,39 @@ judges:
     temperature: 0
     system_prompt: |
       You are evaluating how well the agent handles edge cases and errors.
-      
+
       Good edge case handling includes:
       - Graceful error messages
       - Helpful clarification requests
       - Appropriate disclaimers
       - No crashes or rude responses
       - Professional tone maintained
-      
+
       Common edge cases:
       - Empty input
       - Invalid ticker symbols
       - Ambiguous questions
       - Impossible calculations
       - Requests for illegal/unethical actions
-      
+
       Scoring:
       - Return 1 if the agent handles the edge case gracefully
       - Return 0 if the agent crashes, is rude, or handles poorly
-      
+
     evaluation_template: |
       Input: {question}
-      
+
       Response: {answer}
-      
+
       Expected Behavior: {expected_behavior}
-      
+
       Task: Did the agent handle this edge case gracefully?
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       Optionally include:
       reason: <explanation>
 
@@ -251,7 +251,7 @@ judges:
     temperature: 0
     system_prompt: |
       You are evaluating the comprehensiveness of investment analysis.
-      
+
       A comprehensive analysis should include:
       - Current price/valuation metrics
       - Financial health indicators
@@ -259,49 +259,49 @@ judges:
       - Risk factors
       - Market sentiment (news/analyst views)
       - Clear conclusion or recommendation
-      
+
       Scoring is based on required components specified in the evaluation.
-      
+
       Scoring:
       - Return 1 if ALL required components are present
       - Return 0 if any required component is missing
-      
+
     evaluation_template: |
       Question: {question}
-      
+
       Answer: {answer}
-      
+
       Required Components: {required_components}
-      
+
       Task: Check if the answer includes all required components.
-      
+
       Return ONLY in this format:
       score: 1
       or
       score: 0
-      
+
       missing_components: <list any missing components>
 
 # Response Parsing Configuration
 parsing:
   score_pattern: 'score:\s*(\d)'
   reason_pattern: 'reason:\s*(.+)'
-  fallback_score: 0  # Default if parsing fails
-  
+  fallback_score: 0 # Default if parsing fails
+
 # Retry Configuration
 retry:
   max_attempts: 3
   backoff_factor: 2
   retry_on_parse_failure: true
-  
+
 # Batch Processing
 batch:
   enabled: true
   batch_size: 10
   max_concurrent_requests: 5
-  
+
 # Caching
 cache:
   enabled: true
   cache_dir: ".eval_cache/llm_judges"
-  ttl: 86400  # 24 hours in seconds
+  ttl: 86400 # 24 hours in seconds

@@ -60,6 +60,7 @@ python evals/runners/run_local.py
 ```
 
 This will:
+
 1. Load all enabled datasets
 2. Run the agent on each test case
 3. Apply evaluators (correctness, faithfulness, tool usage, etc.)
@@ -77,6 +78,7 @@ python evals/runners/run_ci.py
 ```
 
 This will:
+
 - Run all evaluations
 - Compare results against thresholds
 - Exit with code 1 if thresholds are breached
@@ -85,9 +87,11 @@ This will:
 ## 📊 Datasets
 
 ### RAG Queries (10 cases)
+
 Tests retrieval quality and context usage from SEC filings.
 
 **Example:**
+
 ```json
 {
   "question": "What was Apple's revenue in their latest 10-K filing?",
@@ -97,21 +101,33 @@ Tests retrieval quality and context usage from SEC filings.
 ```
 
 ### Investment Analysis (10 cases)
+
 Tests comprehensive investment analysis capabilities.
 
 **Example:**
+
 ```json
 {
   "question": "Should I invest in AAPL right now?",
-  "expected_tools": ["get_current_price_yahoo", "get_key_metrics", "fetch_latest_news"],
-  "required_components": ["current_price", "financial_metrics", "news_sentiment"]
+  "expected_tools": [
+    "get_current_price_yahoo",
+    "get_key_metrics",
+    "fetch_latest_news"
+  ],
+  "required_components": [
+    "current_price",
+    "financial_metrics",
+    "news_sentiment"
+  ]
 }
 ```
 
 ### Tool Usage Cases (25 cases)
+
 Tests correct tool selection and usage.
 
 **Example:**
+
 ```json
 {
   "question": "What's the latest news on Apple?",
@@ -121,9 +137,11 @@ Tests correct tool selection and usage.
 ```
 
 ### Edge Cases (20 cases)
+
 Tests error handling and graceful degradation.
 
 **Example:**
+
 ```json
 {
   "question": "",
@@ -133,9 +151,11 @@ Tests error handling and graceful degradation.
 ```
 
 ### Out of Scope (15 cases)
+
 Tests detection of non-stock-market queries.
 
 **Example:**
+
 ```json
 {
   "question": "What is Bitcoin?",
@@ -145,9 +165,11 @@ Tests detection of non-stock-market queries.
 ```
 
 ### Regression Suite (15 cases)
+
 Tests core functionality stability.
 
 **Example:**
+
 ```json
 {
   "question": "What's AAPL's current stock price?",
@@ -191,16 +213,19 @@ Tests core functionality stability.
 ## 📈 Metrics
 
 ### Latency Metrics
+
 - Mean, Median, Min, Max
 - P50, P95, P99 percentiles
 - Thresholds: mean <5s, p95 <10s, p99 <15s
 
 ### Cost Metrics
+
 - Per-query cost tracking
 - Total budget monitoring
 - Model-specific pricing (GPT-4o, GPT-4o-mini, etc.)
 
 ### Usage Metrics
+
 - Average tools per query
 - Tool usage distribution
 - Overuse rate (>3 tools)
@@ -217,14 +242,14 @@ datasets:
   rag_queries:
     enabled: true
     path: "evals/dataset/rag_queries.json"
-    sample_size: null  # null = use all
+    sample_size: null # null = use all
 
 evaluators:
   correctness:
     enabled: true
     threshold: 80
     model: "gpt-4o-mini"
-    
+
 metrics:
   latency:
     enabled: true
@@ -253,7 +278,9 @@ judges:
 ## 📝 Reports
 
 ### JSON Report
+
 Complete machine-readable results:
+
 ```json
 {
   "summary": {
@@ -267,9 +294,11 @@ Complete machine-readable results:
 ```
 
 ### Markdown Report
+
 Human-readable summary with tables and statistics.
 
 ### HTML Report
+
 Interactive dashboard with cards and charts.
 
 ## 🔧 Development
@@ -278,6 +307,7 @@ Interactive dashboard with cards and charts.
 
 1. Create JSON file in `evals/dataset/`
 2. Add to `eval_config.yaml`:
+
 ```yaml
 datasets:
   my_new_dataset:
@@ -289,6 +319,7 @@ datasets:
 
 1. Create evaluator in `evals/evaluators/`
 2. Add to `eval_config.yaml`:
+
 ```yaml
 evaluators:
   my_evaluator:
@@ -296,6 +327,7 @@ evaluators:
     threshold: 80
     applicable_to: ["my_new_dataset"]
 ```
+
 3. Integrate in `run_local.py`
 
 ### Running Specific Datasets
@@ -313,14 +345,17 @@ Edit `eval_config.yaml` and set `enabled: false` for unwanted datasets.
 ## 🐛 Troubleshooting
 
 ### Evaluations Running Slow
+
 - Enable sampling in config: `sampling.enabled: true`
 - Reduce concurrent LLM calls: `advanced.max_concurrent_llm_calls: 3`
 
 ### High API Costs
+
 - Use cheaper model: `default_model: "gpt-4o-mini"`
 - Enable caching: `cache.enabled: true`
 
 ### Threshold Failures
+
 - Review failures in report
 - Adjust thresholds if unrealistic
 - Improve agent prompts/tools
