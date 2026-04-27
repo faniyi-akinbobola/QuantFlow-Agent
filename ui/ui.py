@@ -52,21 +52,9 @@ async def get_graph():
 
 @cl.on_chat_start
 async def start():
-    # Show splash screen with logo centered for 3 seconds
-    splash = cl.Message(
-        content="",
-        elements=[
-            cl.Image(
-                name="splash",
-                path="public/logo.png",
-                display="inline",
-                size="large",
-            )
-        ],
-    )
-    await splash.send()
+    # chainlit.md shows the logo splash instantly in the browser.
+    # Sleep 3s here so the user sees it before welcome message appears.
     await asyncio.sleep(3)
-    await splash.remove()
     await cl.Message(content=WELCOME_MESSAGE).send()
     cl.user_session.set("thread_id", cl.user_session.get("id"))
 
