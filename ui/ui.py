@@ -52,8 +52,21 @@ async def get_graph():
 
 @cl.on_chat_start
 async def start():
-    # Show logo/readme for 3 seconds before sending welcome message
+    # Show splash screen with logo centered for 3 seconds
+    splash = cl.Message(
+        content="",
+        elements=[
+            cl.Image(
+                name="splash",
+                path="public/logo.png",
+                display="inline",
+                size="large",
+            )
+        ],
+    )
+    await splash.send()
     await asyncio.sleep(3)
+    await splash.remove()
     await cl.Message(content=WELCOME_MESSAGE).send()
     cl.user_session.set("thread_id", cl.user_session.get("id"))
 
