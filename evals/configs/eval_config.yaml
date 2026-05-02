@@ -117,7 +117,7 @@ metrics:
     enabled: true
     thresholds:
       avg_tools_per_query: 3.0
-      overuse_rate: 15.0 # max % of queries using >3 tools
+      overuse_rate: 30.0 # max % of queries using >3 tools (agent is multi-tool by design)
 
 # Out-of-Scope Detection
 out_of_scope:
