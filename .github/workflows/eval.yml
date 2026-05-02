@@ -40,6 +40,7 @@ jobs:
         if: steps.chroma-cache.outputs.cache-hit != 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL: ${{ secrets.SEC_EMAIL }}
         run: uv run python scripts/ingest.py
 
       - name: Run gated evaluation
@@ -53,7 +54,7 @@ jobs:
           LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
           LANGCHAIN_PROJECT: "QuantFlow-Agent-CI"
           NAME: ${{ secrets.NAME }}
-          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL: ${{ secrets.SEC_EMAIL }}
         run: uv run python evals/runners/run_ci.py
 
       - name: Upload evaluation reports
