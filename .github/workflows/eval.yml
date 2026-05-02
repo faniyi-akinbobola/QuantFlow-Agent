@@ -1,0 +1,94 @@
+name: 🧪 Gated Evaluation Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  evaluate:
+    name: Agent Evaluation Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Restore ChromaDB cache
+        uses: actions/cache@v4
+        id: chroma-cache
+        with:
+          path: data/chroma_db
+          key: chroma-db-${{ hashFiles('scripts/ingest.py') }}
+          restore-keys: |
+            chroma-db-
+
+      - name: Build ChromaDB if not cached
+        if: steps.chroma-cache.outputs.cache-hit != 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: uv run python scripts/ingest.py
+
+      - name: Run gated evaluation
+        id: eval
+        env:
+          CI: "true"
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          LANGCHAIN_TRACING_V2: "true"
+          LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+          LANGCHAIN_PROJECT: "QuantFlow-Agent-CI"
+          NAME: ${{ secrets.NAME }}
+          EMAIL: ${{ secrets.EMAIL }}
+        run: uv run python evals/runners/run_ci.py
+
+      - name: Upload evaluation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-reports-${{ github.sha }}
+          path: evals/reports/
+          retention-days: 30
+
+      - name: Comment PR with evaluation results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const dir = 'evals/reports/';
+            if (!fs.existsSync(dir)) {
+              console.log('No reports directory found');
+              return;
+            }
+            const reports = fs.readdirSync(dir).filter(f => f.endsWith('.md')).sort();
+            if (reports.length === 0) {
+              console.log('No markdown report found');
+              return;
+            }
+            const latest = reports[reports.length - 1];
+            const report = fs.readFileSync(path.join(dir, latest), 'utf8');
+            const truncated = report.length > 65000
+              ? report.substring(0, 65000) + '\n\n_...report truncated, download full artifact above_'
+              : report;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Evaluation Report\n\n${truncated}`
+            });

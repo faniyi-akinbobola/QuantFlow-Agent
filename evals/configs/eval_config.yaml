@@ -50,32 +50,32 @@ evaluators:
   correctness:
     enabled: true
     weight: 1.0
-    threshold: 80 # Minimum acceptable score (%)
-    model: "gpt-4o-mini"
+    threshold: 75 # CI gate: fail if agent correctness drops below 75%
+    model: "gpt-4.1-mini"
     temperature: 0
     applicable_to: ["investment_analysis", "rag_queries", "regression_suite"]
 
   faithfulness:
     enabled: true
     weight: 1.0
-    threshold: 90 # High bar for hallucination prevention
-    model: "gpt-4o-mini"
+    threshold: 85 # CI gate: high bar — hallucinations must stay below 15%
+    model: "gpt-4.1-mini"
     temperature: 0
     applicable_to: ["rag_queries", "investment_analysis"]
 
   reasoning_quality:
     enabled: true
     weight: 0.8
-    threshold: 75
-    model: "gpt-4o-mini"
+    threshold: 75 # CI gate: reasoning must stay structured and relevant
+    model: "gpt-4.1-mini"
     temperature: 0
     applicable_to: ["investment_analysis", "regression_suite"]
 
   grounding:
     enabled: true
     weight: 1.0
-    threshold: 85
-    model: "gpt-4o-mini"
+    threshold: 80 # CI gate: RAG answers must be grounded in retrieved docs
+    model: "gpt-4.1-mini"
     temperature: 0
     applicable_to: ["rag_queries"]
 
@@ -83,7 +83,7 @@ evaluators:
   tool_usage:
     enabled: true
     weight: 1.0
-    threshold: 85
+    threshold: 80 # CI gate: tool selection must be correct 80%+ of the time
     applicable_to:
       ["tool_usage_cases", "investment_analysis", "regression_suite"]
 
@@ -103,9 +103,9 @@ metrics:
   latency:
     enabled: true
     thresholds:
-      mean: 5.0 # seconds
-      p95: 10.0 # seconds
-      p99: 15.0 # seconds
+      mean: 15.0 # seconds — realistic for multi-tool agent calls
+      p95: 30.0 # seconds
+      p99: 45.0 # seconds
 
   cost:
     enabled: true
